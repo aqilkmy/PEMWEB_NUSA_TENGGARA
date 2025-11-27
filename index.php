@@ -40,5 +40,16 @@
             <img src="https://2.bp.blogspot.com/-3sr5Ru0WLrU/WixvQ0KYFwI/AAAAAAAAHwQ/G92was3cxtwTjyykjq1wE1A6p5UTuhwqwCLcBGAs/s1600/pulau%2Bpadar.jpg" alt="">
         </div>
     </section>
+    <section class="destination">
+        <h1>Destinasi Populer</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim suscipit neque, ut sagittis metus consequat sed. Morbi nec sodales nibh, sit amet dictum ipsum. In eget ligula quis lectus scelerisque mollis. Duis tincidunt facilisis lacus, sit amet iaculis nisi aliquam id.</p>
+
+        <div class="destination-card">
+            <div class="card-1">
+                <img src="https://www.indonesia.travel/content/dam/indtravelrevamp/en/home/destinations/nusa-tenggara-timur/komodo-island/komodo-island-1.jpg" alt="">
+                <h3>Pulau Komodo</h3>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

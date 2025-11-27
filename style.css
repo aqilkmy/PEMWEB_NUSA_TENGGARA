@@ -97,7 +97,7 @@ nav {
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url('https://lp-cms-production.imgix.net/features/2017/08/GettyImages-178212320_medium-296867a1d718.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850&q=20&dpr=5');
     background-size: cover;
-    height: 200vh;
+    height: 100%;
     
 }
 
@@ -111,9 +111,11 @@ nav {
     margin: 20px;
     /* color: white; */
     margin-top: 50px;
+    
 }
 .hero-text p {
     color: white;
+    margin-bottom: 50px;
 }
 .hero-text h1 {
     color: white;
@@ -125,6 +127,7 @@ nav {
     overflow-wrap: normal;
     margin: 20px;
     margin-top: 50px;
+    border-radius: 10px;
 }
 
 .btn-hero {
@@ -134,7 +137,7 @@ nav {
     padding: 5px 15px;
     border-radius: 5px;
     font-weight: 500;
-    margin: 50px 0px;
+    margin-top: 50px;
     background-color: white;
     color: var(--transparent-color);
 
@@ -144,4 +147,19 @@ nav {
     background-color: transparent;
     color: white;
     transition: 0.3s;
+}
+
+/* end hero section */
+/* destination section */
+.destination {
+    padding: 40px;
+    text-align: center;
+}
+.destination h1{
+    color: var(--primary-color);
+}
+.destination p{
+    color: var(--primary-color);
+    width: 800px;
+    margin: auto;
 }
