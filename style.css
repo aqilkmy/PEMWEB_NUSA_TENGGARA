@@ -1,0 +1,147 @@
+:root {
+    --primary-color: #106277;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    /* --transparent-color:; */
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", sans-serif;
+}
+
+nav {
+    background-color: var(--shadow-color);
+    padding: 10px 100px;
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.isi-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.kanan-navbar {
+    display: flex;
+    align-items: center;
+}
+.kiri-navbar {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.nav-links a {
+    color: white;
+    text-align: end;
+    display: inline-block;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+.login-register{
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.btn-login {
+    text-decoration: none;
+    color: white;
+    border: 2px solid white;
+    font-weight: 900;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 10px;
+}
+.btn-login:hover{
+    text-decoration: none;
+    background-color: white;
+    color: var(--transparent-color);
+    transition: 0.3s;
+}
+.btn-register {
+    text-decoration: none;
+    border: 2px solid white;
+    font-weight: 900;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 10px;
+    background-color: white;
+    color: var(--transparent-color);
+}
+.btn-register:hover{
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+    transition: 0.3s;
+}
+
+.logo {
+    width: 50px;
+}
+
+/* end nav */
+/* hero section */
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    padding: 100px;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('https://lp-cms-production.imgix.net/features/2017/08/GettyImages-178212320_medium-296867a1d718.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850&q=20&dpr=5');
+    background-size: cover;
+    height: 200vh;
+    
+}
+
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+.hero-text {
+    text-align: left;
+    margin: 20px;
+    /* color: white; */
+    margin-top: 50px;
+}
+.hero-text p {
+    color: white;
+}
+.hero-text h1 {
+    color: white;
+}
+
+.hero-img img {
+    width: 600px;
+    height: 400px;
+    overflow-wrap: normal;
+    margin: 20px;
+    margin-top: 50px;
+}
+
+.btn-hero {
+    text-decoration: none;
+    border: 2px solid white;
+    font-weight: 900;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 50px 0px;
+    background-color: white;
+    color: var(--transparent-color);
+
+}
+.btn-hero:hover{
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+    transition: 0.3s;
+}
