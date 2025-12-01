@@ -11,11 +11,35 @@ html, body {
 }
 
 nav {
-    background-color: var(--shadow-color);
-    padding: 10px 100px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 5px 100px;
     position: fixed;
-    width: 100%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
     box-sizing: border-box;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+    z-index: 50;
+}
+
+nav.scrolled {
+    background-color: rgba(16, 98, 119, 0.7);
+    backdrop-filter: blur(10px);
+    width: 66%;
+    padding: 20px 50px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+nav.scrolled .isi-navbar {
+    justify-content: center;
+}
+
+p {
+    font-size: 16px;
 }
 
 .isi-navbar {
@@ -33,6 +57,10 @@ nav {
     align-items: center;
     color: white;
 }
+
+.kiri-navbar img, .kiri-navbar p {
+    transition: all 0.5s ease-in-out;
+}
 .nav-links a {
     color: white;
     text-align: end;
@@ -40,6 +68,19 @@ nav {
     text-decoration: none;
     margin: 0 15px;
     font-weight: 500;
+    position: relative;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
 }
 
 .login-register{
@@ -53,7 +94,7 @@ nav {
     border: 2px solid white;
     font-weight: 900;
     padding: 5px 15px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: 500;
     margin: 10px;
 }
@@ -68,11 +109,11 @@ nav {
     border: 2px solid white;
     font-weight: 900;
     padding: 5px 15px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: 500;
     margin: 10px;
     background-color: white;
-    color: var(--transparent-color);
+    color: var(--primary-color);
 }
 .btn-register:hover{
     text-decoration: none;
@@ -97,11 +138,13 @@ nav {
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url('https://lp-cms-production.imgix.net/features/2017/08/GettyImages-178212320_medium-296867a1d718.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850&q=20&dpr=5');
     background-size: cover;
-    height: 100%;
-    
+    height: 80dvh;
 }
 
-
+.hero-content {
+    align-items: center;
+    display: flex;
+}
 .hero h1 {
     font-size: 48px;
     margin-bottom: 20px;
@@ -135,7 +178,7 @@ nav {
     border: 2px solid white;
     font-weight: 900;
     padding: 5px 15px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: 500;
     margin-top: 50px;
     background-color: white;
@@ -151,15 +194,110 @@ nav {
 
 /* end hero section */
 /* destination section */
-.destination {
+.destination, .offer{
     padding: 40px;
     text-align: center;
 }
-.destination h1{
+
+.destination h3 {
+    margin-top: 50px;
     color: var(--primary-color);
 }
-.destination p{
+.destination button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.destination h1, .offer h1{
     color: var(--primary-color);
+}
+.destination p, .offer p{
+    color: black;
     width: 800px;
     margin: auto;
 }
+
+.destination-list {
+    display: flex   ;
+    justify-content: center;
+}
+
+.card-1, .card-2, .card-3, .card-4 {
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    cursor: pointer;
+}
+
+.card-1 img, .card-2 img, .card-3 img, .card-4 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-1 h3, .card-2 h3, .card-3 h3, .card-4 h3 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    z-index: 2;
+    margin: 0;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.offer{
+    margin: auto;
+    align-items: center;
+}
+
+.info-selection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    gap: 50px;
+    width: 80%;
+    margin: 0 auto;
+}
+.info-row1, .info-row2, .info-row3 {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+.info-box {
+    margin-top: 50px;
+    width: 500px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.info-box h1{
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    margin-top: 20px;
+    word-wrap: break-word;
+}
+.info-box p{
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+

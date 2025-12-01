@@ -7,49 +7,74 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class="isi-navbar">
-            <div class="kiri-navbar">
-                <img src="asset/ntt.png" alt="" class="logo">
-                <p style="margin: 0px 20px;">Nusa Tenggara Timur</p>
-            </div>
-                <div class="kanan-navbar">
-                    <div class="nav-links">
-                        <a href="index.php">Beranda</a>
-                        <a href="#">Destinasi</a>
-                        <a href="#">Tentang</a>
-                        <a href="#">Kontak</a>
-                    </div>
-                    <div class="login-register">
-                        <a href="#" class="btn-login">Login</a>
-                        <a href="#" class="btn-register">Register</a>
-                    </div>
-                </div>
-        </div>
-    </nav>
+    <?php include 'header.php'; ?>
     <section class="hero">
-        <div class="hero-text">
-            <h1>Explore Nusa Tenggara Timur</h1>
-            <p>Discover the beauty and culture of Nusa Tenggara Timur, Indonesia's hidden gem.
-            From stunning beaches to vibrant traditions, embark on an unforgettable journey.
-            </p>
-            <a href="#" class="btn-hero">Get Started</a>
 
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Explore Nusa Tenggara Timur</h1>
+                <p>Discover the beauty and culture of Nusa Tenggara Timur, Indonesia's hidden gem.
+                From stunning beaches to vibrant traditions, embark on an unforgettable journey.
+                </p>
+                <a href="#" class="btn-hero">Get Started</a>
+
+            </div>
+            <div class="hero-img">
+                <img src="https://2.bp.blogspot.com/-3sr5Ru0WLrU/WixvQ0KYFwI/AAAAAAAAHwQ/G92was3cxtwTjyykjq1wE1A6p5UTuhwqwCLcBGAs/s1600/pulau%2Bpadar.jpg" alt="">
+            </div>
         </div>
-        <div class="hero-img">
-            <img src="https://2.bp.blogspot.com/-3sr5Ru0WLrU/WixvQ0KYFwI/AAAAAAAAHwQ/G92was3cxtwTjyykjq1wE1A6p5UTuhwqwCLcBGAs/s1600/pulau%2Bpadar.jpg" alt="">
+    </section>
+    <section class="offer">
+        <h1>Yang Kami Tawarkan</h1>
+        <div class="info-selection">
+            <div class="info-row1">
+                <div class="info-box">
+                    <img src="asset/destinasi.png" alt="">
+                    <h1>Destinasi Lengkap</h1>
+                    <p>Dari pantai eksotis, gugusan pulau menawan, hingga pegunungan megah—semuanya dapat kamu eksplorasi dalam satu tempat.</p>
+                </div>
+                <div class="info-box">
+                    <img src="asset/komunitas.png" alt="">
+                    <h1>Komunitas Aktif</h1>
+                    <p>Terhubung dengan wisatawan dan lokal yang siap berbagi pengalaman, tips perjalanan, serta cerita inspiratif.</p>
+                </div>
+            </div>
+            <div class="info-row2">
+                <div class="info-box">
+                    <img src="asset/rekomendasi.png" alt="">
+                    <h1>Rekomendsi Terpercaya</h1>
+                    <p>Ulasan asli, rekomendasi akurat, dan informasi terbaru untuk membantumu merencanakan perjalanan terbaik.</p>
+                </div>
+            </div>
         </div>
+
     </section>
     <section class="destination">
         <h1>Destinasi Populer</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim suscipit neque, ut sagittis metus consequat sed. Morbi nec sodales nibh, sit amet dictum ipsum. In eget ligula quis lectus scelerisque mollis. Duis tincidunt facilisis lacus, sit amet iaculis nisi aliquam id.</p>
+        <p>Tembus batas petualanganmu dengan pilihan lokasi <span style="font-weight: bold; color: #106277;">terbaik</span> paling banyak dikunjungi wisatawan.</p>
 
-        <div class="destination-card">
-            <div class="card-1">
-                <img src="https://www.indonesia.travel/content/dam/indtravelrevamp/en/home/destinations/nusa-tenggara-timur/komodo-island/komodo-island-1.jpg" alt="">
-                <h3>Pulau Komodo</h3>
+        <div class="destination-list">
+            <div class="destination-card">
+                <div class="card-1">
+                    <h3>Pulau Komodo</h3>
+                    <img src="asset/pulau-komodo.png" alt="">
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="card-1">
+                    <h3>Pulau Padar</h3>
+                    <img src="asset/pulau-padar.png" alt="">
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="card-1">
+                    <h3>Danau Kalimutu</h3>
+                    <img src="asset/danau-kalimutu.png" alt="">
+                </div>
             </div>
         </div>
+        <h3>Cari lebih lanjut tentang destinasi - destinasi yang menarik!</h3>
+        <button href="#">Lihat ></button>
     </section>
 </body>
 </html>
