@@ -15,11 +15,9 @@
 
         <div class="hero-content">
             <div class="hero-text">
-                <h1>Explore Nusa Tenggara Timur</h1>
-                <p>Discover the beauty and culture of Nusa Tenggara Timur, Indonesia's hidden gem.
-                    From stunning beaches to vibrant traditions, embark on an unforgettable journey.
-                </p>
-                <a href="#" class="btn-hero">Get Started</a>
+                <h1>Jelajahi Nusa Tenggara Timur</h1>
+                <p>Temukan keindahan dan budaya Nusa Tenggara Timur, permata tersembunyi Indonesia. Dari pantai-pantai yang memukau hingga tradisi yang semarak, mulailah perjalanan yang tak terlupakan.</p>
+                <a href="#" class="btn-hero">Mulai Sekarang</a>
 
             </div>
             <div class="hero-img">
@@ -45,7 +43,7 @@
             <div class="info-row2">
                 <div class="info-box">
                     <img src="asset/rekomendasi.png" alt="">
-                    <h1>Rekomendsi Terpercaya</h1>
+                    <h1>Rekomendasi Terpercaya</h1>
                     <p>Ulasan asli, rekomendasi akurat, dan informasi terbaru untuk membantumu merencanakan perjalanan terbaik.</p>
                 </div>
             </div>
