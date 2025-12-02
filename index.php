@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nusa Tenggara Timur</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="asset/ntt.png">
 </head>
+
 <body>
     <?php include 'header.php'; ?>
     <section class="hero">
@@ -14,7 +17,7 @@
             <div class="hero-text">
                 <h1>Explore Nusa Tenggara Timur</h1>
                 <p>Discover the beauty and culture of Nusa Tenggara Timur, Indonesia's hidden gem.
-                From stunning beaches to vibrant traditions, embark on an unforgettable journey.
+                    From stunning beaches to vibrant traditions, embark on an unforgettable journey.
                 </p>
                 <a href="#" class="btn-hero">Get Started</a>
 
@@ -77,4 +80,5 @@
         <button href="#">Lihat ></button>
     </section>
 </body>
+
 </html>
