@@ -28,3 +28,27 @@ CREATE TABLE komentar (
     FOREIGN KEY (destinasi_id) REFERENCES destinasi(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+ALTER TABLE destinasi
+ADD sub_gambar1 VARCHAR(255),
+ADD sub_gambar2 VARCHAR(255),
+ADD sub_gambar3 VARCHAR(255),
+ADD link_gmaps VARCHAR(255) NULL,
+ADD label_destinasi VARCHAR(100);
+
+CREATE TABLE jenis_destinasi (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama_jenis VARCHAR(100) NOT NULL
+);
+
+ALTER TABLE destinasi
+ADD jenis_id INT,
+ADD FOREIGN KEY (jenis_id) REFERENCES jenis_destinasi(id);
+
+CREATE TABLE kontak (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    pesan TEXT NOT NULL,
+    tanggal TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
