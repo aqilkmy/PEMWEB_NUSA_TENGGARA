@@ -76,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nama = mysqli_real_escape_string($conn, $_POST['nama']);
         $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
         $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
+        $link_gmaps = mysqli_real_escape_string($conn, $_POST['link_gmaps']);
+        $kategori_id = intval($_POST['kategori_id']);
         
         // Get old data if editing
         $old_gambar = '';
@@ -108,6 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       nama='$nama', 
                       lokasi='$lokasi', 
                       deskripsi='$deskripsi', 
+                      kategori_id='$kategori_id',
+                      link_gmaps='$link_gmaps',
                       gambar='$gambar',
                       sub_gambar1='$sub_gambar1',
                       sub_gambar2='$sub_gambar2',
@@ -116,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $message = "Destinasi berhasil diupdate!";
         } else {
             // Insert
-            $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, gambar, sub_gambar1, sub_gambar2, sub_gambar3) 
-                      VALUES ('$nama', '$lokasi', '$deskripsi', '$gambar', '$sub_gambar1', '$sub_gambar2', '$sub_gambar3')";
+            $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, kategori_id, gambar, sub_gambar1, sub_gambar2, sub_gambar3)
+            VALUES ('$nama', '$lokasi', '$deskripsi', '$kategori_id', '$gambar', '$sub_gambar1', '$sub_gambar2', '$sub_gambar3')";
             $message = "Destinasi berhasil ditambahkan!";
         }
         
@@ -132,7 +136,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Get all destinations
-$query = "SELECT * FROM destinasi ORDER BY created_at DESC";
+$query = "
+    SELECT 
+        d.*,
+        k.nama AS nama_kategori
+    FROM destinasi d
+    LEFT JOIN kategori k ON d.kategori_id = k.id
+    ORDER BY d.id DESC
+";
 $result = mysqli_query($conn, $query);
 
 // Get edit data
@@ -313,6 +324,24 @@ if (isset($_GET['edit'])) {
                 </div>
                 
                 <div class="form-group">
+                    <label>Link Google Maps</label>
+                    <input type="url" name="link_gmaps" placeholder="https://maps..." value="<?php echo $edit_data ? htmlspecialchars($edit_data['link_gmaps']) : ''; ?>">
+                    <small style="color:#666;">Boleh dikosongkan</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori Destinasi *</label>
+                    <select name="kategori_id" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <?php
+                        $kategori = mysqli_query($conn, "SELECT * FROM kategori"); while ($k = mysqli_fetch_assoc($kategori)) :
+                        ?>
+                        <option value="<?= $k['id']; ?>" <?= ($edit_data && $edit_data['kategori_id'] == $k['id']) ? 'selected' : ''; ?>> <?= htmlspecialchars($k['nama']); ?> </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>Gambar Utama * <?php echo $edit_data && !empty($edit_data['gambar']) ? '(File saat ini: ' . basename($edit_data['gambar']) . ')' : ''; ?></label>
                     <input type="file" name="gambar" accept="image/*" <?php echo !$edit_data ? 'required' : ''; ?>>
                     <?php if ($edit_data && !empty($edit_data['gambar'])): ?>
@@ -355,44 +384,85 @@ if (isset($_GET['edit'])) {
         </div>
 
         <div class="table-container">
-            <h2>Daftar Destinasi</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Gambar</th>
-                        <th>Nama</th>
-                        <th>Lokasi</th>
-                        <th>Deskripsi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><img src="../<?php echo htmlspecialchars($row['gambar']); ?>" class="destination-img" alt=""></td>
-                                <td><?php echo htmlspecialchars($row['nama']); ?></td>
-                                <td><?php echo htmlspecialchars($row['lokasi']); ?></td>
-                                <td><?php echo substr(htmlspecialchars($row['deskripsi']), 0, 50) . '...'; ?></td>
-                                <td>
-                                    <a href="?edit=<?php echo $row['id']; ?>" class="btn-action btn-edit">Edit</a>
-                                    <a href="?delete=<?php echo $row['id']; ?>" class="btn-action btn-delete" onclick="return confirm('Yakin ingin menghapus destinasi ini?')">Hapus</a>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                    } else {
-                        echo '<tr><td colspan="6" style="text-align: center;">Belum ada destinasi</td></tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        <h2>Daftar Destinasi</h2>
+        <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Gambar</th>
+                <th>Nama</th>
+                <th>Lokasi</th>
+                <th>Deskripsi</th>
+                <th>Link Google Maps</th>
+                <th>Kategori</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+            ?>
+                <tr>
+                    <td><?= $row['id']; ?></td>
+
+                    <td>
+                        <img src="../<?= htmlspecialchars($row['gambar']); ?>" 
+                             class="destination-img" alt="">
+                    </td>
+
+                    <td><?= htmlspecialchars($row['nama']); ?></td>
+                    <td><?= htmlspecialchars($row['lokasi']); ?></td>
+
+                    <td>
+                        <?= substr(htmlspecialchars($row['deskripsi']), 0, 50); ?>...
+                    </td>
+
+                    <!-- LINK GMAPS -->
+                    <td>
+                        <?php if (!empty($row['link_gmaps'])) : ?>
+                            <a href="<?= htmlspecialchars($row['link_gmaps']); ?>" 
+                               target="_blank" class="btn-action btn-map">
+                                Lihat Maps
+                            </a>
+                        <?php else : ?>
+                            <span style="color:#999;">-</span>
+                        <?php endif; ?>
+                    </td>
+
+                    <!-- KATEGORI -->
+                    <td>
+                        <span class="badge-kategori">
+                             <?= htmlspecialchars($row['nama_kategori']); ?>
+                        </span>
+                    </td>
+
+                    <!-- AKSI -->
+                    <td>
+                        <a href="?edit=<?= $row['id']; ?>" 
+                           class="btn-action btn-edit">Edit</a>
+
+                        <a href="?delete=<?= $row['id']; ?>" 
+                           class="btn-action btn-delete"
+                           onclick="return confirm('Yakin ingin menghapus destinasi ini?')">
+                           Hapus
+                        </a>
+                    </td>
+                </tr>
+            <?php
+                }
+            } else {
+                echo '<tr>
+                        <td colspan="8" style="text-align:center;">
+                            Belum ada destinasi
+                        </td>
+                      </tr>';
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
 <?php
