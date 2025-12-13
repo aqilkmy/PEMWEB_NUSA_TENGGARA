@@ -315,12 +315,12 @@ $comments_result = mysqli_query($conn, $comments_query);
         </div>
 
         <!-- Google Maps Section -->
-        <?php if (!empty($destinasi['lokasi'])): ?>
+        <?php if (!empty($destinasi['link_gmaps'])): ?>
         <div class="map-section">
             <h2>Lokasi</h2>
             <div class="map-container">
                 <iframe 
-                    src="https://www.google.com/maps?q=<?php echo urlencode($destinasi['lokasi']); ?>&output=embed" 
+                src="<?php echo htmlspecialchars($destinasi['link_gmaps']); ?>"
                     width="100%" 
                     height="450" 
                     style="border:0;" 
