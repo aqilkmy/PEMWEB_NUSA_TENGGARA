@@ -15,8 +15,8 @@
                         <a href="contact.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a>
                     </div>
                     <div class="login-register">
-                        <a href="#" class="btn-login">Login</a>
-                        <a href="#" class="btn-register">Register</a>
+                        <a href="login.php" class="btn-login">Login</a>
+                        <a href="register.php" class="btn-register">Register</a>
                     </div>
                 </div>
         </div>

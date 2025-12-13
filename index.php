@@ -12,7 +12,6 @@
 <body>
     <?php include 'header.php'; ?>
     <section class="hero">
-
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Jelajahi Nusa Tenggara Timur</h1>
@@ -56,19 +55,19 @@
 
         <div class="destination-list">
             <div class="destination-card">
-                <div class="card-1">
+                <div class="card">
                     <h3>Pulau Komodo</h3>
                     <img src="asset/pulau-komodo.png" alt="">
                 </div>
             </div>
             <div class="destination-card">
-                <div class="card-1">
+                <div class="card">
                     <h3>Pulau Padar</h3>
                     <img src="asset/pulau-padar.png" alt="">
                 </div>
             </div>
             <div class="destination-card">
-                <div class="card-1">
+                <div class="card">
                     <h3>Danau Kalimutu</h3>
                     <img src="asset/danau-kalimutu.png" alt="">
                 </div>
