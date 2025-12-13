@@ -30,11 +30,11 @@ CREATE TABLE komentar (
 );
 
 ALTER TABLE destinasi
-ADD sub_gambar1 VARCHAR(255),
-ADD sub_gambar2 VARCHAR(255),
-ADD sub_gambar3 VARCHAR(255),
-ADD link_gmaps VARCHAR(255) NULL,
-ADD label_destinasi VARCHAR(100);
+ADD COLUMN sub_gambar1 VARCHAR(255),
+ADD COLUMN sub_gambar2 VARCHAR(255),
+ADD COLUMN sub_gambar3 VARCHAR(255),
+ADD COLUMN link_gmaps VARCHAR(255) NULL,
+ADD COLUMN label_destinasi VARCHAR(100);
 
 CREATE TABLE jenis_destinasi (
     id INT AUTO_INCREMENT PRIMARY KEY,

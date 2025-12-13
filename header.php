@@ -10,9 +10,9 @@
                 <div class="kanan-navbar">
                     <div class="nav-links">
                         <a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">Beranda</a>
-                        <a href="destination.php" class="<?php echo ($current_page == 'destinasi.php') ? 'active' : ''; ?>">Destinasi</a>
-                        <a href="about.php" class="<?php echo ($current_page == 'tentang.php') ? 'active' : ''; ?>">Tentang</a>
-                        <a href="contact.php" class="<?php echo ($current_page == 'kontak.php') ? 'active' : ''; ?>">Kontak</a>
+                        <a href="destination.php" class="<?php echo ($current_page == 'destination.php') ? 'active' : ''; ?>">Destinasi</a>
+                        <a href="about.php" class="<?php echo ($current_page == 'about.php') ? 'active' : ''; ?>">Tentang</a>
+                        <a href="contact.php" class="<?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>">Kontak</a>
                     </div>
                     <div class="login-register">
                         <a href="login.php" class="btn-login">Login</a>

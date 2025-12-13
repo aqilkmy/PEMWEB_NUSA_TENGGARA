@@ -16,7 +16,7 @@
             <div class="hero-text">
                 <h1>Jelajahi Nusa Tenggara Timur</h1>
                 <p>Temukan keindahan dan budaya Nusa Tenggara Timur, permata tersembunyi Indonesia. Dari pantai-pantai yang memukau hingga tradisi yang semarak, mulailah perjalanan yang tak terlupakan.</p>
-                <a href="#" class="btn-hero">Mulai Sekarang</a>
+                <a href="destination.php" class="btn-hero">Mulai Sekarang</a>
 
             </div>
             <div class="hero-img">
@@ -74,7 +74,7 @@
             </div>
         </div>
         <h3>Cari lebih lanjut tentang destinasi - destinasi yang menarik!</h3>
-        <button href="#">Lihat ></button>
+        <a href="destination.php" class="btn-des">Lihat</a>
     </section>
 </body>
 

@@ -232,6 +232,46 @@ $comments_result = mysqli_query($conn, $comments_query);
             font-weight: 600;
             text-decoration: none;
         }
+        
+        /* Sub Images Gallery */
+        .sub-images-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .sub-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .sub-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Map Section Styles */
+        .map-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+        .map-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .map-container iframe {
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -239,7 +279,7 @@ $comments_result = mysqli_query($conn, $comments_query);
     <?php include 'header.php'; ?>
     
     <div class="detail-container">
-        <a href="destination.php" class="btn-back">← Kembali</a>
+        <a href="destination.php" class="btn-back">Kembali</a>
         
         <div class="detail-header">
             <h1><?php echo htmlspecialchars($destinasi['nama']); ?></h1>
@@ -250,10 +290,47 @@ $comments_result = mysqli_query($conn, $comments_query);
         
         <img src="<?php echo htmlspecialchars($destinasi['gambar']); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="detail-image">
         
+        <?php
+        // Display sub images if available
+        $sub_images = array_filter([
+            $destinasi['sub_gambar1'] ?? '',
+            $destinasi['sub_gambar2'] ?? '',
+            $destinasi['sub_gambar3'] ?? ''
+        ]);
+        
+        if (!empty($sub_images)):
+        ?>
+        <div class="sub-images-gallery">
+            <?php foreach ($sub_images as $sub_img): ?>
+                <?php if (!empty($sub_img)): ?>
+                    <img src="<?php echo htmlspecialchars($sub_img); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="sub-image">
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+        
         <div class="detail-content">
             <h2>Tentang Destinasi Ini</h2>
             <p><?php echo nl2br(htmlspecialchars($destinasi['deskripsi'])); ?></p>
         </div>
+
+        <!-- Google Maps Section -->
+        <?php if (!empty($destinasi['lokasi'])): ?>
+        <div class="map-section">
+            <h2>Lokasi</h2>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps?q=<?php echo urlencode($destinasi['lokasi']); ?>&output=embed" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <section class="comment-section">
             <h2>Komentar (<?php echo mysqli_num_rows($comments_result); ?>)</h2>

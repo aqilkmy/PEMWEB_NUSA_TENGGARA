@@ -5,34 +5,129 @@ require_once '../config.php';
 // Handle delete
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
+    
+    // Get image paths before deletion
+    $get_images_query = "SELECT gambar, sub_gambar1, sub_gambar2, sub_gambar3 FROM destinasi WHERE id = $id";
+    $result_images = mysqli_query($conn, $get_images_query);
+    if ($row_images = mysqli_fetch_assoc($result_images)) {
+        // Delete image files
+        $images = [$row_images['gambar'], $row_images['sub_gambar1'], $row_images['sub_gambar2'], $row_images['sub_gambar3']];
+        foreach ($images as $img) {
+            if (!empty($img) && file_exists("../" . $img)) {
+                unlink("../" . $img);
+            }
+        }
+    }
+    
     $delete_query = "DELETE FROM destinasi WHERE id = $id";
     if (mysqli_query($conn, $delete_query)) {
         $success_message = "Destinasi berhasil dihapus!";
     }
 }
 
-// Handle add/edit
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
-    $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
-    $gambar = mysqli_real_escape_string($conn, $_POST['gambar']);
-    
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        // Update
-        $id = intval($_POST['id']);
-        $query = "UPDATE destinasi SET nama='$nama', lokasi='$lokasi', deskripsi='$deskripsi', gambar='$gambar' WHERE id=$id";
-        $message = "Destinasi berhasil diupdate!";
-    } else {
-        // Insert
-        $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, gambar) VALUES ('$nama', '$lokasi', '$deskripsi', '$gambar')";
-        $message = "Destinasi berhasil ditambahkan!";
+// Function to handle file upload
+function handleFileUpload($file, $old_file = '') {
+    if ($file['error'] == UPLOAD_ERR_NO_FILE) {
+        return $old_file; // No new file uploaded, keep old file
     }
     
-    if (mysqli_query($conn, $query)) {
-        $success_message = $message;
-    } else {
-        $error_message = "Error: " . mysqli_error($conn);
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        throw new Exception("Upload error: " . $file['error']);
+    }
+    
+    // Validate file type using getimagesize (more reliable)
+    $image_info = getimagesize($file['tmp_name']);
+    if ($image_info === false) {
+        throw new Exception("File is not a valid image.");
+    }
+    
+    // Check allowed image types
+    $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
+    if (!in_array($image_info[2], $allowed_types)) {
+        throw new Exception("File type not allowed. Only JPG, PNG, and GIF are allowed.");
+    }
+    
+    // Validate file size (max 5MB)
+    if ($file['size'] > 5 * 1024 * 1024) {
+        throw new Exception("File size too large. Maximum 5MB.");
+    }
+    
+    // Generate unique filename
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $filename = uniqid() . '_' . time() . '.' . $extension;
+    $upload_path = '../uploads/' . $filename;
+    
+    // Delete old file if exists
+    if (!empty($old_file) && file_exists('../' . $old_file)) {
+        unlink('../' . $old_file);
+    }
+    
+    // Move uploaded file
+    if (!move_uploaded_file($file['tmp_name'], $upload_path)) {
+        throw new Exception("Failed to move uploaded file.");
+    }
+    
+    return 'uploads/' . $filename;
+}
+
+// Handle add/edit
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        $nama = mysqli_real_escape_string($conn, $_POST['nama']);
+        $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
+        $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
+        
+        // Get old data if editing
+        $old_gambar = '';
+        $old_sub1 = '';
+        $old_sub2 = '';
+        $old_sub3 = '';
+        
+        if (isset($_POST['id']) && !empty($_POST['id'])) {
+            $id = intval($_POST['id']);
+            $get_old = "SELECT gambar, sub_gambar1, sub_gambar2, sub_gambar3 FROM destinasi WHERE id = $id";
+            $old_result = mysqli_query($conn, $get_old);
+            if ($old_row = mysqli_fetch_assoc($old_result)) {
+                $old_gambar = $old_row['gambar'];
+                $old_sub1 = $old_row['sub_gambar1'];
+                $old_sub2 = $old_row['sub_gambar2'];
+                $old_sub3 = $old_row['sub_gambar3'];
+            }
+        }
+        
+        // Handle file uploads
+        $gambar = handleFileUpload($_FILES['gambar'], $old_gambar);
+        $sub_gambar1 = handleFileUpload($_FILES['sub_gambar1'], $old_sub1);
+        $sub_gambar2 = handleFileUpload($_FILES['sub_gambar2'], $old_sub2);
+        $sub_gambar3 = handleFileUpload($_FILES['sub_gambar3'], $old_sub3);
+        
+        if (isset($_POST['id']) && !empty($_POST['id'])) {
+            // Update
+            $id = intval($_POST['id']);
+            $query = "UPDATE destinasi SET 
+                      nama='$nama', 
+                      lokasi='$lokasi', 
+                      deskripsi='$deskripsi', 
+                      gambar='$gambar',
+                      sub_gambar1='$sub_gambar1',
+                      sub_gambar2='$sub_gambar2',
+                      sub_gambar3='$sub_gambar3'
+                      WHERE id=$id";
+            $message = "Destinasi berhasil diupdate!";
+        } else {
+            // Insert
+            $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, gambar, sub_gambar1, sub_gambar2, sub_gambar3) 
+                      VALUES ('$nama', '$lokasi', '$deskripsi', '$gambar', '$sub_gambar1', '$sub_gambar2', '$sub_gambar3')";
+            $message = "Destinasi berhasil ditambahkan!";
+        }
+        
+        if (mysqli_query($conn, $query)) {
+            $success_message = $message;
+        } else {
+            throw new Exception(mysqli_error($conn));
+        }
+    } catch (Exception $e) {
+        $error_message = "Error: " . $e->getMessage();
     }
 }
 
@@ -196,7 +291,7 @@ if (isset($_GET['edit'])) {
 
         <div class="form-container">
             <h2><?php echo $edit_data ? 'Edit' : 'Tambah'; ?> Destinasi</h2>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <?php if ($edit_data): ?>
                     <input type="hidden" name="id" value="<?php echo $edit_data['id']; ?>">
                 <?php endif; ?>
@@ -208,7 +303,8 @@ if (isset($_GET['edit'])) {
                 
                 <div class="form-group">
                     <label>Lokasi *</label>
-                    <input type="text" name="lokasi" required value="<?php echo $edit_data ? htmlspecialchars($edit_data['lokasi']) : ''; ?>">
+                    <input type="text" name="lokasi" required value="<?php echo $edit_data ? htmlspecialchars($edit_data['lokasi']) : ''; ?>" placeholder="Contoh: Pulau Komodo, Nusa Tenggara Timur">
+                    <small style="color: #666; font-size: 13px;">Masukkan nama lokasi atau alamat lengkap. Lokasi ini akan ditampilkan di Google Maps pada halaman detail.</small>
                 </div>
                 
                 <div class="form-group">
@@ -217,8 +313,35 @@ if (isset($_GET['edit'])) {
                 </div>
                 
                 <div class="form-group">
-                    <label>URL Gambar *</label>
-                    <input type="text" name="gambar" required placeholder="asset/nama-gambar.png atau https://..." value="<?php echo $edit_data ? htmlspecialchars($edit_data['gambar']) : ''; ?>">
+                    <label>Gambar Utama * <?php echo $edit_data && !empty($edit_data['gambar']) ? '(File saat ini: ' . basename($edit_data['gambar']) . ')' : ''; ?></label>
+                    <input type="file" name="gambar" accept="image/*" <?php echo !$edit_data ? 'required' : ''; ?>>
+                    <?php if ($edit_data && !empty($edit_data['gambar'])): ?>
+                        <small style="color: #666;">Biarkan kosong jika tidak ingin mengubah gambar</small>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="form-group">
+                    <label>Sub Gambar 1 <?php echo $edit_data && !empty($edit_data['sub_gambar1']) ? '(File saat ini: ' . basename($edit_data['sub_gambar1']) . ')' : ''; ?></label>
+                    <input type="file" name="sub_gambar1" accept="image/*">
+                    <?php if ($edit_data && !empty($edit_data['sub_gambar1'])): ?>
+                        <small style="color: #666;">Biarkan kosong jika tidak ingin mengubah gambar</small>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="form-group">
+                    <label>Sub Gambar 2 <?php echo $edit_data && !empty($edit_data['sub_gambar2']) ? '(File saat ini: ' . basename($edit_data['sub_gambar2']) . ')' : ''; ?></label>
+                    <input type="file" name="sub_gambar2" accept="image/*">
+                    <?php if ($edit_data && !empty($edit_data['sub_gambar2'])): ?>
+                        <small style="color: #666;">Biarkan kosong jika tidak ingin mengubah gambar</small>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="form-group">
+                    <label>Sub Gambar 3 <?php echo $edit_data && !empty($edit_data['sub_gambar3']) ? '(File saat ini: ' . basename($edit_data['sub_gambar3']) . ')' : ''; ?></label>
+                    <input type="file" name="sub_gambar3" accept="image/*">
+                    <?php if ($edit_data && !empty($edit_data['sub_gambar3'])): ?>
+                        <small style="color: #666;">Biarkan kosong jika tidak ingin mengubah gambar</small>
+                    <?php endif; ?>
                 </div>
                 
                 <button type="submit" class="btn-submit">

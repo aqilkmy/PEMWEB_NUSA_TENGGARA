@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="login-container">
-        <h1>Login Admin</h1>
+        <h1>Masuk </h1>
         
         <?php if ($error): ?>
             <div class="error-message"><?php echo $error; ?></div>
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         
         <div class="back-home" style="margin-top: 10px;">
-            <a href="index.php">← Kembali ke Beranda</a>
+            <a href="index.php">Kembali ke Beranda</a>
         </div>
     </div>
 </body>
