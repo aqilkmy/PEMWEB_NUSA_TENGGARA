@@ -8,7 +8,11 @@ $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['searc
 if (!empty($search)) {
     $query = "SELECT * FROM destinasi WHERE nama LIKE '%$search%' OR lokasi LIKE '%$search%' OR deskripsi LIKE '%$search%' ORDER BY created_at DESC";
 } else {
-    $query = "SELECT * FROM destinasi ORDER BY created_at DESC";
+    $query = "SELECT d.*, k.nama AS nama_kategori
+    FROM destinasi d
+    JOIN kategori k ON d.kategori_id = k.id
+    ORDER BY k.id ASC, d.nama ASC
+";
 }
 $result = mysqli_query($conn, $query);
 ?>
@@ -51,7 +55,12 @@ $result = mysqli_query($conn, $query);
                             <div class="des-card-content">
                                 <h3><?php echo htmlspecialchars($row['nama']); ?></h3>
                                 <p><?php echo htmlspecialchars($short_desc); ?></p>
+                                <div class="action-row">
                                 <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn-detail">Detail</a>
+                                <span class="label-kategori">
+                                    <?= htmlspecialchars($row['nama_kategori']); ?>
+                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>
