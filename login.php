@@ -42,6 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="asset/ntt.png">
     <style>
+        body {
+            background-image: url('asset/wae-rebo.jpg');
+            background-size: cover;
+            /* opacity: 0.8; */
+            overflow: hidden;
+        }
         .login-container {
             max-width: 400px;
             margin: 150px auto;

@@ -168,6 +168,10 @@ if (isset($_GET['edit'])) {
     <title>Admin - Kelola Destinasi</title>
     <link rel="stylesheet" href="../style.css">
     <style>
+        body {
+            background-image: url('../asset/destination-bg.png');
+            background-size: cover;
+        }
         .admin-container {
             max-width: 1200px;
             margin: 120px auto 40px;
@@ -180,14 +184,15 @@ if (isset($_GET['edit'])) {
             margin-bottom: 30px;
         }
         .admin-header h1 {
-            color: var(--primary-color);
+            color: white;
+            font-size: 40px;
         }
         .btn-logout {
             background-color: #dc3545;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
             text-decoration: none;
         }
@@ -251,8 +256,8 @@ if (isset($_GET['edit'])) {
             color: white;
         }
         .btn-action {
-            padding: 5px 10px;
-            margin-right: 5px;
+            padding: 2px 5px;
+            margin: 5px;
             border: none;
             border-radius: 3px;
             cursor: pointer;
@@ -261,7 +266,7 @@ if (isset($_GET['edit'])) {
         }
         .btn-edit {
             background-color: #ffc107;
-            color: #000;
+            color: white;
         }
         .btn-delete {
             background-color: #dc3545;
@@ -291,6 +296,7 @@ if (isset($_GET['edit'])) {
     </style>
 </head>
 <body>
+    
     <div class="admin-container">
         <div class="admin-header">
             <h1>Kelola Destinasi</h1>
@@ -387,6 +393,7 @@ if (isset($_GET['edit'])) {
                 <?php endif; ?>
             </form>
         </div>
+        
 
         <div class="table-container">
         <h2>Daftar Destinasi</h2>
@@ -467,6 +474,7 @@ if (isset($_GET['edit'])) {
         </tbody>
     </table>
 </div>
+<div class="gradient-bg"></div>
 
 </body>
 </html>

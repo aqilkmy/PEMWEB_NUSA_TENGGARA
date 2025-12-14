@@ -1,4 +1,7 @@
 <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <nav id="navbar">
@@ -15,8 +18,12 @@
                         <a href="contact.php" class="<?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>">Kontak</a>
                     </div>
                     <div class="login-register">
-                        <a href="login.php" class="btn-login">Login</a>
-                        <a href="register.php" class="btn-register">Register</a>
+                        <?php if (isset($_SESSION['user_id'])): ?>            
+                            <a href="logout.php" class="btn-register">Logout</a>
+                        <?php else: ?>
+                            <a href="login.php" class="btn-login">Login</a>
+                            <a href="register.php" class="btn-register">Register</a>
+                        <?php endif; ?>
                     </div>
                 </div>
         </div>

@@ -23,11 +23,12 @@ $result = mysqli_query($conn, $query);
     <link rel="icon" type="image/x-icon" href="asset/ntt.png">
 </head>
 
-<body>
+<body style="background-image: url('asset/destination-bg.png');
+    background-size: cover;">
     <div class="gradient-bg"></div>
     <?php include 'header.php'; ?>
 
-    <section class="destination-page">
+    <section class="contact-page">
         <div class="search-container">
             <h1>Hubungi Kami</h1>
             <p style="color:white;">Kami siap membantu terkait kebutuhanmu!</p>
