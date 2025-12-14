@@ -21,7 +21,7 @@ a {
     width: 100%;
     height: 300px;
     background: linear-gradient(0deg, #09506200 0%, #114865 100%);
-    z-index: 0;
+    z-index: -1;
 }
 
 nav {
