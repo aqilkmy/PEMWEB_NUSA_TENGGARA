@@ -1,11 +1,24 @@
-# Allow image files only
+# Uploads Security
+
+# Allow only image files
 <FilesMatch "\.(jpg|jpeg|png|gif)$">
     Order Allow,Deny
     Allow from all
 </FilesMatch>
 
-# Deny access to other file types
+# Deny PHP execution
 <FilesMatch "\.php$">
     Order Deny,Allow
     Deny from all
+</FilesMatch>
+
+# Deny access to other file types
+<FilesMatch "\.">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(jpg|jpeg|png|gif)$">
+    Order Allow,Deny
+    Allow from all
 </FilesMatch>
