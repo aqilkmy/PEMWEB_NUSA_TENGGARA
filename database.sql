@@ -1,44 +1,70 @@
--- Buat database
+-- Database WonderfulNTT
+
 CREATE DATABASE IF NOT EXISTS ntt_db;
 USE ntt_db;
 
--- Tabel users
-CREATE TABLE users (
+-- Table: users
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
+    nama VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert admin default (email: admin123@gmail.com, password: admin123)
-INSERT INTO users (nama, email, password, role)
+-- Insert default admin
+-- Email: admin123@gmail.com
+-- Password: admin123
+INSERT IGNORE INTO users (nama, email, password, role)
 VALUES ('Admin', 'admin123@gmail.com', SHA2('admin123', 256), 'admin');
 
--- Tabel destinasi
-CREATE TABLE destinasi (
+-- Table: kategori
+CREATE TABLE IF NOT EXISTS kategori (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(150),
-    lokasi VARCHAR(150),
-    deskripsi TEXT,
-    gambar VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    nama VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert sample data destinasi
-INSERT INTO destinasi (nama, lokasi, deskripsi, gambar) VALUES
-('Pulau Komodo', 'Taman Nasional Komodo', 'Pulau Komodo adalah sebuah pulau yang terletak di Kepulauan Nusa Tenggara. Pulau Komodo dikenal sebagai habitat asli hewan komodo yang merupakan kadal terbesar di dunia.', 'asset/pulau-komodo.png'),
-('Pulau Padar', 'Flores', 'Pulau Padar menawarkan pemandangan alam yang spektakuler dengan bukit-bukit yang menjulang dan pantai berpasir putih yang memukau.', 'asset/pulau-padar.png'),
-('Danau Kelimutu', 'Ende, Flores', 'Danau Kelimutu adalah danau vulkanik yang terkenal dengan tiga danau berwarna yang berubah-ubah. Keindahan alam dan mitos lokal menjadikannya destinasi wisata yang unik.', 'asset/danau-kalimutu.png');
+-- Insert default categories
+INSERT IGNORE INTO kategori (id, nama) VALUES 
+(1, 'Wisata Alam'),
+(2, 'Wisata Budaya'),
+(3, 'Wisata Kuliner'),
+(4, 'Wisata Religi'),
+(5, 'Wisata Sejarah');
 
--- Tabel komentar
-CREATE TABLE komentar (
+-- Table: destinasi
+CREATE TABLE IF NOT EXISTS destinasi (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    destinasi_id INT,
-    user_id INT,
+    nama VARCHAR(150) NOT NULL,
+    lokasi VARCHAR(150) NOT NULL,
+    deskripsi TEXT NOT NULL,
+    kategori_id INT DEFAULT NULL,
+    gambar VARCHAR(255) NOT NULL,
+    sub_gambar1 VARCHAR(255) DEFAULT NULL,
+    sub_gambar2 VARCHAR(255) DEFAULT NULL,
+    sub_gambar3 VARCHAR(255) DEFAULT NULL,
+    link_gmaps VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (kategori_id) REFERENCES kategori(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table: komentar
+CREATE TABLE IF NOT EXISTS komentar (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    destinasi_id INT NOT NULL,
+    user_id INT NOT NULL,
     isi TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (destinasi_id) REFERENCES destinasi(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table: kontak
+CREATE TABLE IF NOT EXISTS kontak (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    pesan TEXT NOT NULL,
+    tanggal TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
