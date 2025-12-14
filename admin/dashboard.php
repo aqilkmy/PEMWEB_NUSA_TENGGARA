@@ -138,12 +138,6 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
     <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <style>
-<<<<<<< HEAD
-        body {
-            background-image: url('../asset/destination-bg.png');
-            background-size: cover;
-        }
-=======
         * {
             margin: 0;
             padding: 0;
@@ -155,7 +149,6 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
             background: #f5f5f5;
         }
 
->>>>>>> dev
         .admin-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -183,12 +176,7 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
             color: white;
             padding: 10px 20px;
             border: none;
-<<<<<<< HEAD
-            border-radius: 15px;
-            cursor: pointer;
-=======
             border-radius: 5px;
->>>>>>> dev
             text-decoration: none;
         }
 
@@ -275,13 +263,8 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
         }
 
         .btn-action {
-<<<<<<< HEAD
-            padding: 2px 5px;
-            margin: 5px;
-=======
             padding: 5px 10px;
             margin: 0 2px;
->>>>>>> dev
             border: none;
             border-radius: 3px;
             text-decoration: none;
@@ -290,13 +273,8 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
         }
 
         .btn-edit {
-<<<<<<< HEAD
-            background-color: #ffc107;
-            color: white;
-=======
             background: #ffc107;
             color: #000;
->>>>>>> dev
         }
 
         .btn-delete {
@@ -332,7 +310,7 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
 </head>
 
 <body>
-    
+
     <div class="admin-container">
         <div class="admin-header">
             <h1>Dashboard Admin</h1>
@@ -423,91 +401,9 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
                 <?php endif; ?>
             </form>
         </div>
-        
+
 
         <div class="table-container">
-<<<<<<< HEAD
-        <h2>Daftar Destinasi</h2>
-        <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Gambar</th>
-                <th>Nama</th>
-                <th>Lokasi</th>
-                <th>Deskripsi</th>
-                <th>Link Google Maps</th>
-                <th>Kategori</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-            ?>
-                <tr>
-                    <td><?= $row['id']; ?></td>
-
-                    <td>
-                        <img src="../<?= htmlspecialchars($row['gambar']); ?>" 
-                             class="destination-img" alt="">
-                    </td>
-
-                    <td><?= htmlspecialchars($row['nama']); ?></td>
-                    <td><?= htmlspecialchars($row['lokasi']); ?></td>
-
-                    <td>
-                        <?= substr(htmlspecialchars($row['deskripsi']), 0, 50); ?>...
-                    </td>
-
-                    <!-- LINK GMAPS -->
-                    <td>
-                        <?php if (!empty($row['link_gmaps'])) : ?>
-                            <a href="<?= htmlspecialchars($row['link_gmaps']); ?>" 
-                               target="_blank" class="btn-action btn-map">
-                                Lihat Maps
-                            </a>
-                        <?php else : ?>
-                            <span style="color:#999;">-</span>
-                        <?php endif; ?>
-                    </td>
-
-                    <!-- KATEGORI -->
-                    <td>
-                        <span class="badge-kategori">
-                             <?= htmlspecialchars($row['nama_kategori']); ?>
-                        </span>
-                    </td>
-
-                    <!-- AKSI -->
-                    <td>
-                        <a href="?edit=<?= $row['id']; ?>" 
-                           class="btn-action btn-edit">Edit</a>
-
-                        <a href="?delete=<?= $row['id']; ?>" 
-                           class="btn-action btn-delete"
-                           onclick="return confirm('Yakin ingin menghapus destinasi ini?')">
-                           Hapus
-                        </a>
-                    </td>
-                </tr>
-            <?php
-                }
-            } else {
-                echo '<tr>
-                        <td colspan="8" style="text-align:center;">
-                            Belum ada destinasi
-                        </td>
-                      </tr>';
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-<div class="gradient-bg"></div>
-
-=======
             <h2>Daftar Destinasi</h2>
             <table>
                 <thead>
@@ -547,7 +443,6 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
             </table>
         </div>
     </div>
->>>>>>> dev
 </body>
 
 </html>
