@@ -47,9 +47,9 @@ function handleFileUpload($file, $old_file = '') {
         throw new Exception("File type not allowed. Only JPG, PNG, and GIF are allowed.");
     }
     
-    // Validate file size (max 5MB)
-    if ($file['size'] > 5 * 1024 * 1024) {
-        throw new Exception("File size too large. Maximum 5MB.");
+    // Validate file size (max 15MB per file)
+    if ($file['size'] > 15 * 1024 * 1024) {
+        throw new Exception("File size too large. Maximum 15MB per file.");
     }
     
     // Generate unique filename
@@ -73,6 +73,11 @@ function handleFileUpload($file, $old_file = '') {
 // Handle add/edit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
+        // Check if POST data is empty (might be due to upload size limit)
+        if (empty($_POST)) {
+            throw new Exception('Upload gagal! Ukuran file terlalu besar. Total ukuran semua file tidak boleh lebih dari 50MB. Silakan gunakan gambar dengan ukuran lebih kecil.');
+        }
+        
         $nama = mysqli_real_escape_string($conn, $_POST['nama']);
         $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
         $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
@@ -120,8 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $message = "Destinasi berhasil diupdate!";
         } else {
             // Insert
-            $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, kategori_id, gambar, sub_gambar1, sub_gambar2, sub_gambar3)
-            VALUES ('$nama', '$lokasi', '$deskripsi', '$kategori_id', '$gambar', '$sub_gambar1', '$sub_gambar2', '$sub_gambar3')";
+            $query = "INSERT INTO destinasi (nama, lokasi, deskripsi, kategori_id, gambar, sub_gambar1, sub_gambar2, sub_gambar3, link_gmaps)
+            VALUES ('$nama', '$lokasi', '$deskripsi', '$kategori_id', '$gambar', '$sub_gambar1', '$sub_gambar2', '$sub_gambar3', '$link_gmaps')";
             $message = "Destinasi berhasil ditambahkan!";
         }
         

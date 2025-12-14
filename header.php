@@ -28,7 +28,7 @@
         const logo = document.getElementById('logo');
         const logoText = document.getElementById('logo-text');
         
-        if (window.scrollY > 700) {
+        if (window.scrollY > 200) {
             navbar.classList.add('scrolled');
             logo.style.opacity = '0';
             logo.style.width = '0';

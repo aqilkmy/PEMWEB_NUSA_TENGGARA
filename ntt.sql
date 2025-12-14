@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama VARCHAR(100),
     email VARCHAR(100) UNIQUE,
@@ -7,10 +7,10 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (nama, email, password, role)
+INSERT IGNORE INTO users (nama, email, password, role)
 VALUES ('admin', 'admin123@gmail.com', SHA2('admin123', 256), 'admin');
 
-CREATE TABLE destinasi (
+CREATE TABLE IF NOT EXISTS destinasi (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama VARCHAR(150),
     lokasi VARCHAR(150),
@@ -19,7 +19,7 @@ CREATE TABLE destinasi (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE komentar (
+CREATE TABLE IF NOT EXISTS komentar (
     id INT AUTO_INCREMENT PRIMARY KEY,
     destinasi_id INT,
     user_id INT,
@@ -29,23 +29,33 @@ CREATE TABLE komentar (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Add columns to destinasi if not exists
 ALTER TABLE destinasi
-ADD COLUMN sub_gambar1 VARCHAR(255),
-ADD COLUMN sub_gambar2 VARCHAR(255),
-ADD COLUMN sub_gambar3 VARCHAR(255),
-ADD COLUMN link_gmaps VARCHAR(255) NULL,
-ADD COLUMN label_destinasi VARCHAR(100);
+ADD COLUMN IF NOT EXISTS sub_gambar1 VARCHAR(255),
+ADD COLUMN IF NOT EXISTS sub_gambar2 VARCHAR(255),
+ADD COLUMN IF NOT EXISTS sub_gambar3 VARCHAR(255),
+ADD COLUMN IF NOT EXISTS link_gmaps VARCHAR(255) NULL,
+ADD COLUMN IF NOT EXISTS label_destinasi VARCHAR(100);
 
-CREATE TABLE jenis_destinasi (
+CREATE TABLE IF NOT EXISTS kategori (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_jenis VARCHAR(100) NOT NULL
+    nama VARCHAR(100) NOT NULL
 );
 
-ALTER TABLE destinasi
-ADD jenis_id INT,
-ADD FOREIGN KEY (jenis_id) REFERENCES jenis_destinasi(id);
+-- Insert kategori default
+INSERT IGNORE INTO kategori (id, nama) VALUES 
+(1, 'Wisata Alam'),
+(2, 'Wisata Budaya'),
+(3, 'Wisata Kuliner'),
+(4, 'Wisata Religi'),
+(5, 'Wisata Sejarah');
 
-CREATE TABLE kontak (
+-- Add kategori_id column if not exists
+ALTER TABLE destinasi
+ADD COLUMN IF NOT EXISTS kategori_id INT,
+ADD CONSTRAINT fk_kategori FOREIGN KEY (kategori_id) REFERENCES kategori(id);
+
+CREATE TABLE IF NOT EXISTS kontak (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,

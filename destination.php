@@ -23,9 +23,10 @@ $result = mysqli_query($conn, $query);
     <link rel="icon" type="image/x-icon" href="asset/ntt.png">
 </head>
 
-<body>
+<body class="destination-body">
     <div class="gradient-bg"></div>
-    <?php include 'header.php'; ?>
+    <div class="destination-parallax-bg"></div>
+    <?php include 'header.php';  ?>
 
     <section class="destination-page">
         <div class="search-container">
@@ -63,6 +64,7 @@ $result = mysqli_query($conn, $query);
             ?>
         </div>
     </section>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

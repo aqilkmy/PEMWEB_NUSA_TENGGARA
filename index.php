@@ -76,6 +76,7 @@
         <h3>Cari lebih lanjut tentang destinasi - destinasi yang menarik!</h3>
         <a href="destination.php" class="btn-des">Lihat</a>
     </section>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

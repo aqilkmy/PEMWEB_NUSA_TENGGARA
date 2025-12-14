@@ -10,6 +10,10 @@ html, body {
     font-family: "Poppins", sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 .gradient-bg {
     position:absolute;
     top: 0;
@@ -17,7 +21,7 @@ html, body {
     width: 100%;
     height: 300px;
     background: linear-gradient(0deg, #09506200 0%, #114865 100%);
-    z-index: -2;
+    z-index: 0;
 }
 
 nav {
@@ -51,6 +55,77 @@ nav.scrolled .isi-navbar {
 p {
     font-size: 16px;
 }
+
+footer {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #0d4f5f 100%);
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+    bottom: 0px;
+}
+footer h2 {
+    font-size: 24px;
+}
+footer a {
+    color: white;
+    margin: 8px 0px;
+}
+.footer-content {
+    margin: auto;
+    justify-content: center;
+    width: 90%;
+    display: flex;
+    text-align: left;
+
+}
+.footer-section-about{
+    display: inline;
+    width: 40%;
+    padding: 20px;
+}
+.about-logo {
+    display: flex;
+    height: 40px;
+    gap: 15px;
+    align-items: center;
+
+}
+.footer-section-links{
+    display: inline;
+    width: 20%;
+    padding: 20px;
+}
+.footer-menu {
+    display:grid;
+}
+.footer-section-contact{
+    display: inline;    
+    width: 30%;
+    padding: 20px;
+}
+
+.footer-contact {
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+}
+.contact-type {
+    width: 30%;
+    display: inline;
+    text-align: start;
+}
+
+.contact-name {
+    width: 70%;
+    display: inline;
+    text-align: end;
+}
+
+
+
+
 
 .isi-navbar {
     display: flex;
@@ -224,6 +299,7 @@ p {
 .destination, .offer{
     padding: 40px;
     text-align: center;
+    background-color: #ffffff;
 }
 
 .destination h3 {
@@ -337,16 +413,37 @@ p {
 }
 
 /* Destination Page */
+.destination-body {
+    position: relative;
+    min-height: 100vh;
+    background-color: black;
+}
+
+.destination-parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('asset/destination-bg.png');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    z-index: -1;
+}
+
 .destination-page {
     padding: 120px 40px 40px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 }
 
 .search-container {
     background: linear-gradient(135deg, var(--primary-color) 0%, #0d4f5f 100%);
     padding: 50px 40px;
-    border-radius: 15px;
+    border-radius: 20px;
     text-align: center;
     margin-bottom: 50px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -354,7 +451,7 @@ p {
 
 .search-container h1 {
     color: white;
-    font-size: 36px;
+    font-size: 42px;
     margin-bottom: 25px;
 }
 
@@ -379,12 +476,16 @@ p {
 }
 
 .search-form::before {
-    content: '🔍';
+    content: '';
     position: absolute;
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    background-image: url('asset/search.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .destination-list {

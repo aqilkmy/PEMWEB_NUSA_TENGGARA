@@ -36,6 +36,7 @@ $result = mysqli_query($conn, $query);
         <p>Kami percaya bahwa pariwisata dapat menjadi jembatan untuk memajukan ekonomi lokal. Karena itu, kami berkomitmen menyediakan informasi yang akurat dan bermanfaat bagi wisatawan, sekaligus ruang untuk pelaku wisata mempromosikan layanan mereka.</p>
         <p>Website ini dikelola oleh komunitas pecinta wisata NTT, dan terbuka untuk kolaborasi dan kontribusi konten. Mari bersama memajukan pariwisata NTT!</p>
     </section>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

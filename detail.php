@@ -16,6 +16,41 @@ if (mysqli_num_rows($result) == 0) {
 
 $destinasi = mysqli_fetch_assoc($result);
 
+// Function to convert Google Maps URL to embed URL
+function getGoogleMapsEmbedUrl($url, $location) {
+    if (empty($url) || strpos($url, 'goo.gl') !== false || strpos($url, 'maps.app.goo.gl') !== false) {
+        // For shortened URLs or empty, use location-based search
+        $location_encoded = urlencode($location);
+        return "https://maps.google.com/maps?q={$location_encoded}&output=embed";
+    }
+    
+    // If already an embed URL, return as is
+    if (strpos($url, 'google.com/maps/embed') !== false || strpos($url, 'output=embed') !== false) {
+        return $url;
+    }
+    
+    // Try to extract coordinates from various Google Maps URL formats
+    // Format: https://www.google.com/maps/place/.../@lat,lng
+    if (preg_match('/@(-?\d+\.\d+),(-?\d+\.\d+)/', $url, $matches)) {
+        $lat = $matches[1];
+        $lng = $matches[2];
+        return "https://maps.google.com/maps?q={$lat},{$lng}&output=embed";
+    }
+    
+    // Format: https://maps.google.com/?q=lat,lng
+    if (preg_match('/q=(-?\d+\.\d+),(-?\d+\.\d+)/', $url, $matches)) {
+        $lat = $matches[1];
+        $lng = $matches[2];
+        return "https://maps.google.com/maps?q={$lat},{$lng}&output=embed";
+    }
+    
+    // Default: search by location name
+    $location_encoded = urlencode($location);
+    return "https://maps.google.com/maps?q={$location_encoded}&output=embed";
+}
+
+$maps_embed_url = getGoogleMapsEmbedUrl($destinasi['link_gmaps'], $destinasi['lokasi']);
+
 // Handle comment submission
 $comment_message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
@@ -53,32 +88,95 @@ $comments_result = mysqli_query($conn, $comments_query);
     <link rel="icon" type="image/x-icon" href="asset/ntt.png">
     <style>
         .detail-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 120px auto 40px;
             padding: 20px;
         }
-        .detail-header {
-            margin-bottom: 30px;
-        }
-        .detail-header h1 {
-            color: var(--primary-color);
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        .detail-header .location {
-            color: #666;
-            font-size: 18px;
-            display: flex;
+        .btn-back {
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        .btn-back:hover {
+            background-color: #0d4f5f;
+        }
+        .btn-back::before {
+            content: "<";
+            font-size: 18px;
+        }
+        .detail-main-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        .detail-image-wrapper {
+            width: 100%;
         }
         .detail-image {
             width: 100%;
-            height: 500px;
+            height: 450px;
             object-fit: cover;
             border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
+        .detail-info h1 {
+            color: #000;
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .detail-info p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+            text-align: justify;
+            background-color: white;
+            box-shadow: #00000011 0px 4px 20px;
+            border-radius: 20px;
+            padding: 10px;
+        }
+        .gallery-section {
+            margin-top: 50px;
+        }
+        .gallery-section h2 {
+            text-align: center;
+            font-size: 28px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: #000;
+            font-weight: 600;
+        }
+        .sub-images-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .sub-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .sub-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
         }
         .detail-content {
             background: white;
@@ -94,19 +192,6 @@ $comments_result = mysqli_query($conn, $comments_query);
             color: #333;
             line-height: 1.8;
             font-size: 16px;
-        }
-        .btn-back {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
-            margin-bottom: 30px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-back:hover {
-            background-color: #0d4f5f;
         }
         
         /* Comment Section Styles */
@@ -281,14 +366,16 @@ $comments_result = mysqli_query($conn, $comments_query);
     <div class="detail-container">
         <a href="destination.php" class="btn-back">Kembali</a>
         
-        <div class="detail-header">
-            <h1><?php echo htmlspecialchars($destinasi['nama']); ?></h1>
-            <div class="location">
-                📍 <?php echo htmlspecialchars($destinasi['lokasi']); ?>
+        <div class="detail-main-section">
+            <div class="detail-image-wrapper">
+                <img src="<?php echo htmlspecialchars($destinasi['gambar']); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="detail-image">
+            </div>
+            
+            <div class="detail-info">
+                <h1><?php echo htmlspecialchars($destinasi['nama']); ?></h1>
+                <p><?php echo nl2br(htmlspecialchars($destinasi['deskripsi'])); ?></p>
             </div>
         </div>
-        
-        <img src="<?php echo htmlspecialchars($destinasi['gambar']); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="detail-image">
         
         <?php
         // Display sub images if available
@@ -300,27 +387,24 @@ $comments_result = mysqli_query($conn, $comments_query);
         
         if (!empty($sub_images)):
         ?>
-        <div class="sub-images-gallery">
-            <?php foreach ($sub_images as $sub_img): ?>
-                <?php if (!empty($sub_img)): ?>
-                    <img src="<?php echo htmlspecialchars($sub_img); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="sub-image">
-                <?php endif; ?>
-            <?php endforeach; ?>
+        <div class="gallery-section">
+            <h2>Galeri</h2>
+            <div class="sub-images-gallery">
+                <?php foreach ($sub_images as $sub_img): ?>
+                    <?php if (!empty($sub_img)): ?>
+                        <img src="<?php echo htmlspecialchars($sub_img); ?>" alt="<?php echo htmlspecialchars($destinasi['nama']); ?>" class="sub-image">
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
         <?php endif; ?>
-        
-        <div class="detail-content">
-            <h2>Tentang Destinasi Ini</h2>
-            <p><?php echo nl2br(htmlspecialchars($destinasi['deskripsi'])); ?></p>
-        </div>
 
         <!-- Google Maps Section -->
-        <?php if (!empty($destinasi['link_gmaps'])): ?>
         <div class="map-section">
             <h2>Lokasi</h2>
             <div class="map-container">
                 <iframe 
-                src="<?php echo htmlspecialchars($destinasi['link_gmaps']); ?>"
+                    src="<?php echo htmlspecialchars($maps_embed_url); ?>"
                     width="100%" 
                     height="450" 
                     style="border:0;" 
@@ -330,7 +414,6 @@ $comments_result = mysqli_query($conn, $comments_query);
                 </iframe>
             </div>
         </div>
-        <?php endif; ?>
 
         <section class="comment-section">
             <h2>Komentar (<?php echo mysqli_num_rows($comments_result); ?>)</h2>
@@ -385,6 +468,7 @@ $comments_result = mysqli_query($conn, $comments_query);
             </div>
         </section>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
 <?php

@@ -63,6 +63,7 @@ $result = mysqli_query($conn, $query);
         </div>
     </div>
     </section>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>
