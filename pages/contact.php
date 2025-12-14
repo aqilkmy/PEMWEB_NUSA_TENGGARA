@@ -134,7 +134,7 @@ $page_title = 'Hubungi Kami - ' . APP_NAME;
     </style>
 </head>
 
-<body>
+<body style="background-image: url('../assets/images/destination-bg.png'); background-size: cover;">
     <div class="gradient-bg"></div>
     <?php include '../includes/header.php'; ?>
 

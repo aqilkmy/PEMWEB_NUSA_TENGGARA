@@ -33,6 +33,10 @@ $page_title = 'Tentang Kami - ' . APP_NAME;
             margin-bottom: 30px;
         }
 
+        .about-container h2 {
+            color: var(--primary-color);
+        }
+
         .about-container p {
             color: #333;
             line-height: 1.8;
@@ -42,17 +46,20 @@ $page_title = 'Tentang Kami - ' . APP_NAME;
     </style>
 </head>
 
-<body>
+<body style="background-image: url('../assets/images/destination-bg.png'); background-size: cover;">
     <div class="gradient-bg"></div>
     <?php include '../includes/header.php'; ?>
 
     <div class="about-container">
         <h1>Tentang Kami</h1>
 
+        <h2>Tentang WonderfulNTT</h2>
         <p>WonderfulNTT adalah platform informasi wisata yang bertujuan memperkenalkan keindahan alam, budaya, dan kekayaan kuliner Nusa Tenggara Timur. Kami hadir untuk membantu wisatawan menemukan referensi perjalanan terbaik melalui informasi destinasi, tips perjalanan, dan cerita pengalaman dari para traveler.</p>
 
+        <h2>Visi Kami</h2>
         <p>Kami percaya bahwa pariwisata dapat menjadi jembatan untuk memajukan ekonomi lokal. Karena itu, kami berkomitmen menyediakan informasi yang akurat dan bermanfaat bagi wisatawan, sekaligus ruang untuk pelaku wisata mempromosikan layanan mereka.</p>
 
+        <h2>Komunitas Kami</h2>
         <p>Website ini dikelola oleh komunitas pecinta wisata NTT, dan terbuka untuk kolaborasi dan kontribusi konten. Mari bersama memajukan pariwisata NTT!</p>
 
         <p style="text-align: center; margin-top: 40px;">
