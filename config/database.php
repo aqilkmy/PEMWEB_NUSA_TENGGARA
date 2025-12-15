@@ -6,7 +6,7 @@ defined('APP_ACCESS') or die('Direct access not permitted');
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
-$db_name = 'ntt_db';
+$db_name = 'ntt';
 
 // Create connection
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
