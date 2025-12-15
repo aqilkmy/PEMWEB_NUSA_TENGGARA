@@ -46,7 +46,7 @@ $page_title = 'Tentang Kami - ' . APP_NAME;
     </style>
 </head>
 
-<body style="background-image: url('../assets/images/destination-bg.png'); background-size: cover;">
+<body style="background-image: url('../assets/images/pulau-padar.jpg'); background-size: cover;">
     <div class="gradient-bg"></div>
     <?php include '../includes/header.php'; ?>
 
