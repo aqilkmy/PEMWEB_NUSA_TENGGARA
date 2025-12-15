@@ -6,6 +6,9 @@ defined('APP_ACCESS') or die('Direct access not permitted');
 function clean($data)
 {
     global $conn;
+    if ($data === null) {
+        return '';
+    }
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
@@ -86,6 +89,11 @@ function is_valid_email($email)
 // Upload image
 function upload_image($file, $old_file = '')
 {
+    // Check if file is null or not set
+    if ($file === null || !isset($file['error'])) {
+        return $old_file;
+    }
+    
     // Check if file uploaded
     if ($file['error'] === UPLOAD_ERR_NO_FILE) {
         return $old_file;

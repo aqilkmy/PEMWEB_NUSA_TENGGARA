@@ -19,11 +19,11 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="asset/ntt.png">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/images/ntt.png">
 </head>
 
-<body style="background-image: url('asset/pulau-padar.jpg');
+<body style="background-image: url('<?php echo BASE_URL; ?>assets/images/pulau-padar.jpg');
     background-size: cover;">
     <div class="gradient-bg"></div>
     <?php include 'header.php'; ?>

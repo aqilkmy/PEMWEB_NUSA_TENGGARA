@@ -64,7 +64,7 @@ $page_title = 'Register - ' . APP_NAME;
     <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/images/ntt.png">
     <style>
         body {
-            background-image: url('asset/pulau-kanawa.webp');
+            background-image: url('<?php echo BASE_URL; ?>assets/images/destination-bg.png');
             background-size: cover;
             min-height: 100vh;
             display: flex;

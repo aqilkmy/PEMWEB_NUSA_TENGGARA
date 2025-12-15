@@ -14,7 +14,6 @@
             </div>
             <div class="login-register">
                 <?php if (is_logged_in()): ?>
-                    <span style="color: white; margin-right: 15px;">Halo, <?php echo htmlspecialchars(user_name()); ?></span>
                     <?php if (is_admin()): ?>
                         <a href="<?php echo BASE_URL; ?>admin/dashboard.php" class="btn-login">Dashboard</a>
                     <?php endif; ?>

@@ -33,11 +33,15 @@ if (isset($_GET['delete'])) {
 
 // Handle Add/Edit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nama = clean($_POST['nama']);
-    $lokasi = clean($_POST['lokasi']);
-    $deskripsi = clean($_POST['deskripsi']);
-    $link_gmaps = clean($_POST['link_gmaps']);
-    $kategori_id = intval($_POST['kategori_id']);
+    // Check if POST data is available (not exceeded size limit)
+    if (empty($_POST)) {
+        $error = 'Data terlalu besar! Ukuran total file (gambar) melebihi batas maksimal. Silakan kurangi ukuran atau jumlah gambar.';
+    } else {
+        $nama = clean($_POST['nama'] ?? '');
+        $lokasi = clean($_POST['lokasi'] ?? '');
+        $deskripsi = clean($_POST['deskripsi'] ?? '');
+        $link_gmaps = clean($_POST['link_gmaps'] ?? '');
+        $kategori_id = intval($_POST['kategori_id'] ?? 0);
 
     // Get old data if editing
     $old_gambar = '';
@@ -58,10 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Handle image uploads
-    $gambar = upload_image($_FILES['gambar'], $old_gambar);
-    $sub1 = upload_image($_FILES['sub_gambar1'], $old_sub1);
-    $sub2 = upload_image($_FILES['sub_gambar2'], $old_sub2);
-    $sub3 = upload_image($_FILES['sub_gambar3'], $old_sub3);
+    $gambar = upload_image($_FILES['gambar'] ?? null, $old_gambar);
+    $sub1 = upload_image($_FILES['sub_gambar1'] ?? null, $old_sub1);
+    $sub2 = upload_image($_FILES['sub_gambar2'] ?? null, $old_sub2);
+    $sub3 = upload_image($_FILES['sub_gambar3'] ?? null, $old_sub3);
 
     // Check for errors
     if (isset($gambar['error'])) {
@@ -104,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $error = 'Gagal menambahkan destinasi.';
             }
         }
+    }
     }
 }
 
@@ -264,7 +269,7 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
 
         .btn-action {
             padding: 5px 10px;
-            margin: 0 2px;
+            margin: 2px 2px;
             border: none;
             border-radius: 3px;
             text-decoration: none;
@@ -274,7 +279,7 @@ $page_title = 'Dashboard Admin - ' . APP_NAME;
 
         .btn-edit {
             background: #ffc107;
-            color: #000;
+            color: white;
         }
 
         .btn-delete {
