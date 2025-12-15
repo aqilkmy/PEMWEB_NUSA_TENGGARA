@@ -65,7 +65,8 @@ $page_title = htmlspecialchars($destinasi['nama']) . ' - ' . APP_NAME;
     <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/images/ntt.png">
     <style>
         body {
-            background-image: url('../assets/images/destination-bg.png');
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../assets/images/destination-bg.png');
             background-size: cover;
             z-index: -2;
         }
@@ -105,7 +106,7 @@ $page_title = htmlspecialchars($destinasi['nama']) . ' - ' . APP_NAME;
         }
 
         .detail-info h1 {
-            color: #000;
+            color: white;
             font-size: 32px;
             margin-bottom: 20px;
         }
