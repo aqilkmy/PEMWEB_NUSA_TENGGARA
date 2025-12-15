@@ -65,7 +65,7 @@ $page_title = 'Login - ' . APP_NAME;
     <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/images/ntt.png">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('<?php echo BASE_URL ?>assets/images/pulau-padar.jpg');
             min-height: 100vh;
             display: flex;
             align-items: center;
