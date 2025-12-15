@@ -64,6 +64,12 @@ $page_title = htmlspecialchars($destinasi['nama']) . ' - ' . APP_NAME;
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/images/ntt.png">
     <style>
+        body {
+            background-image: url('../assets/images/destination-bg.png');
+            background-size: cover;
+            z-index: -2;
+        }
+
         .detail-container {
             max-width: 1200px;
             margin: 120px auto 40px;
